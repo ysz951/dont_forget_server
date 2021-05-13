@@ -33,6 +33,13 @@ public class Item {
     @JsonIdentityReference(alwaysAsId=true)
     private Users user;
 
+    @ManyToOne(targetEntity = ItemList.class)
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId=true)
+    private ItemList list;
+
     public Long getId() {
         return id;
     }
@@ -57,6 +64,13 @@ public class Item {
         this.user = user;
     }
 
+    public ItemList getList() {
+        return list;
+    }
+
+    public void setList(ItemList list) {
+        this.list = list;
+    }
 
 
 }
