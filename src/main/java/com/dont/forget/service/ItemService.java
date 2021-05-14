@@ -29,4 +29,11 @@ public class ItemService {
         itemRepository.delete(item);
         return ResponseEntity.ok(new ApiResponse(true, "Delete item"));
     }
+
+    public ResponseEntity<?> updateItem(long id, UserPrincipal currentUser, String name) {
+        Item item = getById(id, currentUser);
+        item.setItemName(name);
+        itemRepository.save(item);
+        return ResponseEntity.ok(new ApiResponse(true, "Update item"));
+    }
 }
