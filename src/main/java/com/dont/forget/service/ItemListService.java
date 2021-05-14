@@ -72,4 +72,10 @@ public class ItemListService {
         return ResponseEntity.ok(new ApiResponse(true, "Delete list successfully"));
     }
 
+    public ResponseEntity<?> updateList(long id, UserPrincipal currentUser, String name) {
+        ItemList itemList = findById(id, currentUser);
+        itemList.setListName(name);
+        itemListRepository.save(itemList);
+        return ResponseEntity.ok(new ApiResponse(true, "Update list successfully"));
+    }
 }
