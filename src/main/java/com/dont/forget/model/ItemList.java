@@ -1,6 +1,7 @@
 package com.dont.forget.model;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,8 @@ public class ItemList extends DateAudit{
     @OneToMany(
             mappedBy = "list",
             targetEntity = Item.class,
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.REMOVE
             )
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,

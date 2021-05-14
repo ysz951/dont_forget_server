@@ -66,4 +66,10 @@ public class ItemListService {
         return itemList.getListItems();
     }
 
+    public ResponseEntity<?> deleteList(long id, UserPrincipal currentUser) {
+        ItemList itemList = findById(id, currentUser);
+        itemListRepository.delete(itemList);
+        return ResponseEntity.ok(new ApiResponse(true, "Delete list successfully"));
+    }
+
 }
