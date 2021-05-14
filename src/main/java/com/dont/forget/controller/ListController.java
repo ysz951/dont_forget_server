@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.dont.forget.model.Item;
 import com.dont.forget.model.ItemList;
@@ -57,6 +59,11 @@ public class ListController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") long id, @CurrentUser UserPrincipal currentUser) {
         return itemListService.deleteList(id, currentUser);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateById(@PathVariable("id") long id, @CurrentUser UserPrincipal currentUser, @RequestParam("name") String name) {
+        return itemListService.updateList(id, currentUser, name);
     }
 
 }
