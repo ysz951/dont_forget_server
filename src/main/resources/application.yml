@@ -4,13 +4,14 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/dontforget_server}
     username: ${SPRING_DATASOURCE_USERNAME:testuser}
     password: ${SPRING_DATASOURCE_PASSWORD:testuser}
+    initialization-mode: always
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-
+  
 logging:
   level:
     org:
