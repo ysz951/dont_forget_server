@@ -9,6 +9,7 @@ import com.dont.forget.exception.ForbiddenException;
 import com.dont.forget.exception.ResourceNotFoundException;
 import com.dont.forget.model.Item;
 import com.dont.forget.model.ItemList;
+import com.dont.forget.model.Type;
 import com.dont.forget.payload.ApiResponse;
 import com.dont.forget.repository.ItemListRepository;
 import com.dont.forget.repository.ItemRepository;
@@ -38,12 +39,13 @@ public class ItemListService {
 
     public ResponseEntity<?> saveList(ItemList itemList, UserPrincipal currentUser) {
         itemList.setUser(userRepository.findById(currentUser.getId()).get());
+        itemList.setType(Type.Now);
         itemListRepository.save(itemList);
         return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
     }
 
     public List<ItemList> getAllList(UserPrincipal currentUser) {
-        List<ItemList> itemList = itemListRepository.findByUserId(currentUser.getId());
+        List<ItemList> itemList = itemListRepository.findByUserIdAndType(currentUser.getId(), Type.Now);
         return itemList;
     }
 

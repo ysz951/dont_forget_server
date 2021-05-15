@@ -4,6 +4,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +31,10 @@ public class ItemList extends DateAudit{
     @Size(min = 1, max = 20)
     @Column(name = "list_name")
     private String listName;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @ManyToOne(targetEntity = Users.class)
     @JsonIdentityInfo(
@@ -81,5 +87,12 @@ public class ItemList extends DateAudit{
         this.listItems = listItems;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
 }
