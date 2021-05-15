@@ -1,6 +1,7 @@
 package com.dont.forget.service;
 
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,8 +64,11 @@ public class ItemListService {
         return item;
     }
 
-    public List<Item> getListItems(long listId, UserPrincipal currentUser) {
+    public Set<Item> getListItems(long listId, UserPrincipal currentUser) {
         ItemList itemList = findById(listId, currentUser);
+        System.out.println(itemList.getId());
+        System.out.println(itemList.getListName());
+        System.out.println(itemList.getListItems().size());
         return itemList.getListItems();
     }
 
@@ -79,5 +83,17 @@ public class ItemListService {
         itemList.setListName(name);
         itemListRepository.save(itemList);
         return ResponseEntity.ok(new ApiResponse(true, "Update list successfully"));
+    }
+
+    public List<ItemList> getAllNextList(UserPrincipal currentUser) {
+        List<ItemList> itemList = itemListRepository.findByUserIdAndType(currentUser.getId(), Type.Next);
+        return itemList;
+    }
+
+    public ResponseEntity<?> saveNextList(ItemList itemList, UserPrincipal currentUser) {
+        itemList.setUser(userRepository.findById(currentUser.getId()).get());
+        itemList.setType(Type.Next);
+        itemListRepository.save(itemList);
+        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
     }
 }

@@ -1,6 +1,6 @@
 package com.dont.forget.model;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +53,7 @@ public class ItemList extends DateAudit{
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JsonIdentityReference(alwaysAsId=true)
-    private List<Item> listItems;
+    private Set<Item> listItems;
 
     public Long getId() {
         return id;
@@ -79,11 +79,11 @@ public class ItemList extends DateAudit{
         this.user = user;
     }
 
-    public List<Item> getListItems() {
+    public Set<Item> getListItems() {
         return listItems;
     }
 
-    public void setListItems(List<Item> listItems) {
+    public void setListItems(Set<Item> listItems) {
         this.listItems = listItems;
     }
 
