@@ -1,9 +1,11 @@
 package com.dont.forget.model;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,9 +28,13 @@ public class ItemList extends DateAudit{
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 50)
     @Column(name = "list_name")
     private String listName;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @ManyToOne(targetEntity = Users.class)
     @JsonIdentityInfo(
@@ -47,7 +53,7 @@ public class ItemList extends DateAudit{
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JsonIdentityReference(alwaysAsId=true)
-    private List<Item> listItems;
+    private Set<Item> listItems;
 
     public Long getId() {
         return id;
@@ -73,13 +79,20 @@ public class ItemList extends DateAudit{
         this.user = user;
     }
 
-    public List<Item> getListItems() {
+    public Set<Item> getListItems() {
         return listItems;
     }
 
-    public void setListItems(List<Item> listItems) {
+    public void setListItems(Set<Item> listItems) {
         this.listItems = listItems;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
 }

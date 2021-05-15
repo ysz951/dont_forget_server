@@ -1,6 +1,7 @@
 package com.dont.forget.controller;
 
 import java.util.List;
+import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,18 @@ public class ListController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveList(@RequestBody @Valid ItemList itemList, @CurrentUser UserPrincipal currentUser) {
+    public ItemList saveList(@RequestBody @Valid ItemList itemList, @CurrentUser UserPrincipal currentUser) {
         return itemListService.saveList(itemList, currentUser);
+    }
+
+    @GetMapping("/next")
+    public List<ItemList> getAllNextList(@CurrentUser UserPrincipal currentUser) {
+        return itemListService.getAllNextList(currentUser);
+    }
+
+    @PostMapping("/next")
+    public ItemList saveNextList(@RequestBody @Valid ItemList itemList, @CurrentUser UserPrincipal currentUser) {
+        return itemListService.saveNextList(itemList, currentUser);
     }
 
     @GetMapping("/{id}")
@@ -50,7 +61,7 @@ public class ListController {
     }
 
     @GetMapping("/{id}/item")
-    public List<Item> getListItem(
+    public Set<Item> getListItem(
             @PathVariable("id") long id,
             @CurrentUser UserPrincipal currentUser) {
         return itemListService.getListItems(id, currentUser);

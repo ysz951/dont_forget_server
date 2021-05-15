@@ -1,6 +1,7 @@
 package com.dont.forget.service;
 
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import com.dont.forget.exception.ForbiddenException;
 import com.dont.forget.exception.ResourceNotFoundException;
 import com.dont.forget.model.Item;
 import com.dont.forget.model.ItemList;
+import com.dont.forget.model.Type;
 import com.dont.forget.payload.ApiResponse;
 import com.dont.forget.repository.ItemListRepository;
 import com.dont.forget.repository.ItemRepository;
@@ -36,14 +38,15 @@ public class ItemListService {
         return itemList;
     }
 
-    public ResponseEntity<?> saveList(ItemList itemList, UserPrincipal currentUser) {
+    public ItemList saveList(ItemList itemList, UserPrincipal currentUser) {
         itemList.setUser(userRepository.findById(currentUser.getId()).get());
-        itemListRepository.save(itemList);
-        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
+        itemList.setType(Type.Now);
+        return itemListRepository.save(itemList);
+//        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
     }
 
     public List<ItemList> getAllList(UserPrincipal currentUser) {
-        List<ItemList> itemList = itemListRepository.findByUserId(currentUser.getId());
+        List<ItemList> itemList = itemListRepository.findByUserIdAndType(currentUser.getId(), Type.Now);
         return itemList;
     }
 
@@ -61,8 +64,11 @@ public class ItemListService {
         return item;
     }
 
-    public List<Item> getListItems(long listId, UserPrincipal currentUser) {
+    public Set<Item> getListItems(long listId, UserPrincipal currentUser) {
         ItemList itemList = findById(listId, currentUser);
+        System.out.println(itemList.getId());
+        System.out.println(itemList.getListName());
+        System.out.println(itemList.getListItems().size());
         return itemList.getListItems();
     }
 
@@ -77,5 +83,17 @@ public class ItemListService {
         itemList.setListName(name);
         itemListRepository.save(itemList);
         return ResponseEntity.ok(new ApiResponse(true, "Update list successfully"));
+    }
+
+    public List<ItemList> getAllNextList(UserPrincipal currentUser) {
+        List<ItemList> itemList = itemListRepository.findByUserIdAndType(currentUser.getId(), Type.Next);
+        return itemList;
+    }
+
+    public ItemList saveNextList(ItemList itemList, UserPrincipal currentUser) {
+        itemList.setUser(userRepository.findById(currentUser.getId()).get());
+        itemList.setType(Type.Next);
+        return itemListRepository.save(itemList);
+//        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
     }
 }
