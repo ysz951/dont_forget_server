@@ -38,11 +38,11 @@ public class ItemListService {
         return itemList;
     }
 
-    public ResponseEntity<?> saveList(ItemList itemList, UserPrincipal currentUser) {
+    public ItemList saveList(ItemList itemList, UserPrincipal currentUser) {
         itemList.setUser(userRepository.findById(currentUser.getId()).get());
         itemList.setType(Type.Now);
-        itemListRepository.save(itemList);
-        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
+        return itemListRepository.save(itemList);
+//        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
     }
 
     public List<ItemList> getAllList(UserPrincipal currentUser) {
@@ -90,10 +90,10 @@ public class ItemListService {
         return itemList;
     }
 
-    public ResponseEntity<?> saveNextList(ItemList itemList, UserPrincipal currentUser) {
+    public ItemList saveNextList(ItemList itemList, UserPrincipal currentUser) {
         itemList.setUser(userRepository.findById(currentUser.getId()).get());
         itemList.setType(Type.Next);
-        itemListRepository.save(itemList);
-        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
+        return itemListRepository.save(itemList);
+//        return new ResponseEntity<>(new ApiResponse(true, "Save list successfully"), HttpStatus.CREATED);
     }
 }

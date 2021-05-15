@@ -33,7 +33,7 @@ public class ListController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveList(@RequestBody @Valid ItemList itemList, @CurrentUser UserPrincipal currentUser) {
+    public ItemList saveList(@RequestBody @Valid ItemList itemList, @CurrentUser UserPrincipal currentUser) {
         return itemListService.saveList(itemList, currentUser);
     }
 
@@ -43,7 +43,7 @@ public class ListController {
     }
 
     @PostMapping("/next")
-    public ResponseEntity<?> saveNextList(@RequestBody @Valid ItemList itemList, @CurrentUser UserPrincipal currentUser) {
+    public ItemList saveNextList(@RequestBody @Valid ItemList itemList, @CurrentUser UserPrincipal currentUser) {
         return itemListService.saveNextList(itemList, currentUser);
     }
 

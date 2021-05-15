@@ -28,7 +28,7 @@ public class ItemList extends DateAudit{
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 50)
     @Column(name = "list_name")
     private String listName;
 
