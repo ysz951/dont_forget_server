@@ -24,5 +24,6 @@ logging:
         SQL: DEBUG
 
 server:
+  port: 5000
   compression:
     enabled: true
