@@ -1,7 +1,6 @@
 package com.dont.forget.controller;
 
 import java.util.List;
-import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.dont.forget.model.Item;
 import com.dont.forget.model.ItemList;
+import com.dont.forget.model.ItemListResponse;
 import com.dont.forget.security.CurrentUser;
 import com.dont.forget.security.UserPrincipal;
 import com.dont.forget.service.ItemListService;
@@ -61,7 +61,7 @@ public class ListController {
     }
 
     @GetMapping("/{id}/item")
-    public Set<Item> getListItem(
+    public ItemListResponse getListItem(
             @PathVariable("id") long id,
             @CurrentUser UserPrincipal currentUser) {
         return itemListService.getListItems(id, currentUser);
