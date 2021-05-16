@@ -1,7 +1,6 @@
 package com.dont.forget.service;
 
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +9,7 @@ import com.dont.forget.exception.ForbiddenException;
 import com.dont.forget.exception.ResourceNotFoundException;
 import com.dont.forget.model.Item;
 import com.dont.forget.model.ItemList;
+import com.dont.forget.model.ItemListResponse;
 import com.dont.forget.model.Type;
 import com.dont.forget.payload.ApiResponse;
 import com.dont.forget.repository.ItemListRepository;
@@ -64,12 +64,10 @@ public class ItemListService {
         return item;
     }
 
-    public Set<Item> getListItems(long listId, UserPrincipal currentUser) {
+    public ItemListResponse getListItems(long listId, UserPrincipal currentUser) {
         ItemList itemList = findById(listId, currentUser);
-        System.out.println(itemList.getId());
-        System.out.println(itemList.getListName());
-        System.out.println(itemList.getListItems().size());
-        return itemList.getListItems();
+        return new ItemListResponse(itemList.getListName(), itemList.getListItems());
+//        return itemList.getListItems();
     }
 
     public ResponseEntity<?> deleteList(long id, UserPrincipal currentUser) {
